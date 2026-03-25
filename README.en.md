@@ -14,6 +14,14 @@ Go to the Northflank dashboard:
 
 Create or rotate your token first. You will store it in GitHub as `NF_API_TOKEN`.
 
+Reference images for getting `NF_API_TOKEN`:
+
+![Step 1](./scripts/image/01.png)
+
+![Step 2](./scripts/image/02.png)
+
+![Step 3](./scripts/image/03.png)
+
 Important:
 
 - the token you posted earlier is already exposed

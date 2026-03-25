@@ -14,6 +14,14 @@
 
 你后面要把它填到 GitHub 的 `NF_API_TOKEN` 里。
 
+获取 `NF_API_TOKEN` 的步骤：
+
+![步骤 1](./scripts/image/01.png)
+
+![步骤 2](./scripts/image/02.png)
+
+![步骤 3](./scripts/image/03.png)
+
 
 ### 第 1 步：把本目录放进你自己的 GitHub 私有仓库
 
