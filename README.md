@@ -23,15 +23,20 @@
 ![步骤 3](./scripts/image/03.png)
 
 
-### 第 1 步：把本目录放进你自己的 GitHub 私有仓库
+### 第 1 步：用 GitHub Importer 转成私有仓库
 
-不要直接用公开仓库跑这套流程。  
-新建一个 GitHub 私有仓库，然后把本目录内容复制进去。
+1. 登录 GitHub，打开 <https://github.com/new/import>
+2. 按以下信息填写：
 
-为什么建议私有仓库：
+| 字段 | 填什么 |
+| --- | --- |
+| `Your old repository's clone URL` | `https://github.com/OUBIGFA/Northflank-Refresh-External-Image` |
+| `Owner` | 你的 GitHub 账号 |
+| `Repository name` | 你的仓库名，例如 `my-northflank-refresh` |
+| `Privacy` | 选 `Private` |
 
-- workflow 里会写你的真实 `project ID` 和 `service ID`
-- 这些信息虽然不是密码，但属于运维信息
+3. 点击 `Begin import`，等待导入完成（通常几十秒到几分钟）
+4. 导入完成后，GitHub 会生成一个属于你自己的私有仓库，后续的 Secret 和 workflow 都在这个仓库的网页里设置
 
 ### 第 2 步：修改 workflow 里的两个示例值
 

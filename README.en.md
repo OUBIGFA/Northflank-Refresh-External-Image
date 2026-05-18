@@ -28,10 +28,20 @@ Important:
 - do not reuse it
 - rotate it first
 
-### Step 1: copy this directory into your own private GitHub repository
+### Step 1: use GitHub Importer to create a private repository
 
-Do not run this from a public repository if you can avoid it.  
-The workflow will contain your real `project ID` and `service ID`.
+1. Log into GitHub, open <https://github.com/new/import>
+2. Fill in the fields as follows:
+
+| Field | Value |
+| --- | --- |
+| `Your old repository's clone URL` | `https://github.com/OUBIGFA/Northflank-Refresh-External-Image` |
+| `Owner` | your GitHub account |
+| `Repository name` | your repo name, e.g. `my-northflank-refresh` |
+| `Privacy` | select `Private` |
+
+3. Click `Begin import` and wait for it to finish (usually under a minute)
+4. Once imported, you have your own private repository. All subsequent Secret and workflow settings are done in this repo.
 
 ### Step 2: replace the two example IDs in the workflow
 
