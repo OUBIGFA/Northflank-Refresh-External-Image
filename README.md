@@ -35,8 +35,8 @@
 | `Repository name` | 你的仓库名，例如 `my-northflank-refresh` |
 | `Privacy` | 选 `Private` |
 
-3. 点击 `Begin import`，等待导入完成（通常几十秒到几分钟）
-4. 导入完成后，GitHub 会生成一个属于你自己的私有仓库，后续的 Secret 和 workflow 都在这个仓库的网页里设置
+1. 点击 `Begin import`，等待导入完成（通常几十秒到几分钟）
+2. 导入完成后，GitHub 会生成一个属于你自己的私有仓库，后续的 Secret 和 workflow 都在这个仓库的网页里设置
 
 ### 第 2 步：修改 workflow 里的两个示例值
 
@@ -112,7 +112,7 @@ https://api.northflank.com/v1/projects/a86/services/b94/restart
 - 你的 Northflank service 已经配置成 `External image`
 - 你的镜像 tag 使用的是 `latest`
 
-然后 workflow 会调用 `restart` 接口。  
+然后 workflow 会调用 `restart` 接口。
 service 重启时，Northflank 会重新拉取这个外部镜像，因此就能拿到最新版本。
 
 ## 如果你的镜像不是 latest
@@ -123,7 +123,7 @@ service 重启时，Northflank 会重新拉取这个外部镜像，因此就能�
 my-image:1.2.3
 ```
 
-那么重启以后仍然还是这个固定版本，不会自动变成新版本。  
+那么重启以后仍然还是这个固定版本，不会自动变成新版本。
 这套方案更适合 `latest` 这种会滚动更新的标签。
 
 ## 改定时执行时间
@@ -144,17 +144,6 @@ schedule:
 - 每周二
 - 04:17 UTC
 
-## 本地测试
-
-如果你想先在本地看一下脚本会调用哪个地址，可以这样跑：
-
-```powershell
-$env:NF_API_TOKEN='your_new_token'
-python .\scripts\refresh_northflank_external_image.py --dry-run
-```
-
-`--dry-run` 不会真的调用 Northflank API，只会打印目标地址。
-
 ## 目录说明
 
 - [workflow](/E:/_BIGFA%20Free/_code/_Mywork/Northflank%20Refresh%20External%20Image/.github/workflows/northflank-refresh-external-image.yml)
@@ -165,3 +154,4 @@ python .\scripts\refresh_northflank_external_image.py --dry-run
 - [Run an image from a container registry](https://northflank.com/docs/v1/application/run/run-an-image-from-a-container-registry)
 - [Manage CI/CD](https://northflank.com/docs/v1/application/release/manage-ci-cd)
 - [Restart service API](https://northflank.com/docs/v1/api/project/services/restart-service)
+
