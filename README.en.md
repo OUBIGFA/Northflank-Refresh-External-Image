@@ -1,20 +1,26 @@
-# Northflank External Image Auto Refresh
+<div># Northflank External Image Auto Refresh
 
-[中文](./README.md) | [English](./README.en.md)
+Periodically restarts Northflank services using external images, pulling the latest version from Docker Hub
 
-One-line summary: this package calls the Northflank restart API on a schedule so a service that already uses `External image` can pull the newest Docker Hub image again.
+[简体中文](README.md) | English
+
+     ![Shell](https://img.shields.io/badge/language-Shell-4EAA25)     ![Platform](https://img.shields.io/badge/platform-GitHub%20Actions-2088FF)     ![License](https://img.shields.io/badge/license-MIT-111827)     ![Schedule](https://img.shields.io/badge/schedule-Weekly-22c55e)   
+
+</div>
+
+> Set up in 3 minutes. After that, your Northflank service is restarted on schedule and always pulls the freshest external image.
 
 ## 3-Minute Setup
 
-### Step 0: create a new Northflank API token first
+### Step 0: Create a Northflank API Token
 
-Go to the Northflank dashboard:
+Open:
 
 - https://app.northflank.com
 
-Create or rotate your token first. You will store it in GitHub as `NF_API_TOKEN`.
+Create an API Token with the proper permissions. You will store it in GitHub as `NF_API_TOKEN`.
 
-Reference images for getting `NF_API_TOKEN`:
+Screenshots for getting `NF_API_TOKEN`:
 
 ![Step 1](./scripts/image/01.png)
 
@@ -22,15 +28,9 @@ Reference images for getting `NF_API_TOKEN`:
 
 ![Step 3](./scripts/image/03.png)
 
-Important:
+### Step 1: Import the repository as a private repo with GitHub Importer
 
-- the token you posted earlier is already exposed
-- do not reuse it
-- rotate it first
-
-### Step 1: use GitHub Importer to create a private repository
-
-1. Log into GitHub, open <https://github.com/new/import>
+1. Log into GitHub and open https://github.com/new/import
 2. Fill in the fields as follows:
 
 | Field | Value |
@@ -40,12 +40,12 @@ Important:
 | `Repository name` | your repo name, e.g. `my-northflank-refresh` |
 | `Privacy` | select `Private` |
 
-3. Click `Begin import` and wait for it to finish (usually under a minute)
-4. Once imported, you have your own private repository. All subsequent Secret and workflow settings are done in this repo.
+1. Click `Begin import` and wait (usually under a minute)
+2. Once imported, you own a private repository. All subsequent Secret and workflow settings are done here.
 
-### Step 2: replace the two example IDs in the workflow
+### Step 2: Replace the example IDs in the workflow
 
-Open this file:
+Open:
 
 - `.github/workflows/northflank-refresh-external-image.yml`
 
@@ -60,23 +60,19 @@ Meaning:
 - `a86` = example `project ID`
 - `b94` = example `service ID`
 
-Replace both values with your own.
+Replace both with your own values.
 
-### Step 3: add the GitHub secret and run the workflow once
+### Step 3: Add the GitHub Secret and run manually
 
 Go to:
 
 - `Settings -> Secrets and variables -> Actions`
 
-Add this secret:
+Add this Secret:
 
 - `NF_API_TOKEN`
 
-Then open:
-
-- `Actions`
-
-Run the workflow manually once and confirm your service restarts successfully.
+Then open `Actions` and run `northflank-image-Update` manually. Confirm that your service restarts successfully.
 
 ## You only need to change 3 things
 
@@ -88,31 +84,23 @@ Everything else can usually stay as-is.
 
 ## Full Example
 
-Example URL:
-
 ```text
 https://api.northflank.com/v1/projects/a86/services/b94/restart
 ```
 
-Field mapping:
-
 - `a86` is an example `project ID`
 - `b94` is an example `service ID`
 
-Again:
-
-- `a86 / b94` are example values only
-- replace them with your own real values before deploying
+Always replace them with your real values before deploying.
 
 ## Why this works
 
-This method assumes:
+Prerequisites:
 
-- your Northflank service already uses `External image`
+- your Northflank service is already configured as `External image`
 - your image tag is `latest`
 
-The workflow calls the `restart` API.  
-When the service starts again, Northflank pulls the external image again, so it can get the newest version.
+The workflow calls the `restart` API. When the service restarts, Northflank pulls the external image again, so it gets the newest version.
 
 ## If your image is not latest
 
@@ -122,16 +110,11 @@ If you use a fixed tag such as:
 my-image:1.2.3
 ```
 
-then a restart will still pull that same fixed tag.  
-This workflow is best for images that update behind `latest`.
+a restart still pulls that same fixed tag. This workflow is best for rolling tags like `latest`.
 
 ## Change the schedule
 
-Edit the `cron` value in:
-
-- `.github/workflows/northflank-refresh-external-image.yml`
-
-Current example:
+Edit the `cron` value in `.github/workflows/northflank-refresh-external-image.yml`:
 
 ```yaml
 schedule:
@@ -143,22 +126,13 @@ Meaning:
 - every Tuesday
 - 04:17 UTC
 
-## Local Dry Run
-
-```powershell
-$env:NF_API_TOKEN='your_new_token'
-python .\scripts\refresh_northflank_external_image.py --dry-run
-```
-
-`--dry-run` prints the target URL only. It does not call the API.
-
-## Files
-
-- [workflow](/E:/_BIGFA%20Free/_code/_Mywork/Northflank%20Refresh%20External%20Image/.github/workflows/northflank-refresh-external-image.yml)
-- [script](/E:/_BIGFA%20Free/_code/_Mywork/Northflank%20Refresh%20External%20Image/scripts/refresh_northflank_external_image.py)
-
 ## Official Docs
 
 - [Run an image from a container registry](https://northflank.com/docs/v1/application/run/run-an-image-from-a-container-registry)
 - [Manage CI/CD](https://northflank.com/docs/v1/application/release/manage-ci-cd)
 - [Restart service API](https://northflank.com/docs/v1/api/project/services/restart-service)
+
+## License
+
+This project is licensed under the MIT License.
+

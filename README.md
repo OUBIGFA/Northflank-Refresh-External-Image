@@ -1,20 +1,26 @@
-# Northflank 外部镜像自动刷新
+<div># Northflank 外部镜像自动刷新
 
-[中文](./README.md) | [English](./README.en.md)
+定时调用 Northflank API 重启外部镜像 service，自动拉取 Docker Hub 最新版本
 
-一句话说明：这个仓库会定时调用 Northflank API，重启你已经配置成 `External image` 的 service，让它重新拉取 Docker Hub 的最新镜像。
+简体中文 | [English](README.en.md)
+
+     ![Shell](https://img.shields.io/badge/language-Shell-4EAA25)     ![Platform](https://img.shields.io/badge/platform-GitHub%20Actions-2088FF)     ![License](https://img.shields.io/badge/license-MIT-111827)     ![Schedule](https://img.shields.io/badge/schedule-Weekly-22c55e)   
+
+</div>
+
+> 只需 3 分钟部署，之后定时自动重启你的 Northflank service，使其重新拉取外部镜像的最新版本。
 
 ## 3 分钟部署
 
-### 第 0 步：先准备好 Northflank API token
+### 第 0 步：创建 Northflank API Token
 
-先去 Northflank 后台创建 token：
+打开：
 
 - https://app.northflank.com
 
-你后面要把它填到 GitHub 的 `NF_API_TOKEN` 里。
+创建一个 API Token，设置好权限。后面把它填到 GitHub 的 `NF_API_TOKEN` 里。
 
-获取 `NF_API_TOKEN` 的步骤：
+获取 `NF_API_TOKEN` 的步骤参考截图：
 
 ![步骤 1](./scripts/image/01.png)
 
@@ -22,10 +28,9 @@
 
 ![步骤 3](./scripts/image/03.png)
 
+### 第 1 步：用 GitHub Importer 转为私有仓库
 
-### 第 1 步：用 GitHub Importer 转成私有仓库
-
-1. 登录 GitHub，打开 <https://github.com/new/import>
+1. 登录 GitHub，打开 https://github.com/new/import
 2. 按以下信息填写：
 
 | 字段 | 填什么 |
@@ -36,11 +41,11 @@
 | `Privacy` | 选 `Private` |
 
 1. 点击 `Begin import`，等待导入完成（通常几十秒到几分钟）
-2. 导入完成后，GitHub 会生成一个属于你自己的私有仓库，后续的 Secret 和 workflow 都在这个仓库的网页里设置
+2. 导入完成后你就拥有一个属于自己的私有仓库，后续的 Secret 和 workflow 都在这个仓库里设置
 
-### 第 2 步：修改 workflow 里的两个示例值
+### 第 2 步：修改 workflow 里的 project ID 和 service ID
 
-打开这个文件：
+打开：
 
 - `.github/workflows/northflank-refresh-external-image.yml`
 
@@ -50,34 +55,24 @@
 https://api.northflank.com/v1/projects/a86/services/b94/restart
 ```
 
-这里的含义是：
+含义：
 
-- `a86` = `project ID` 示例
-- `b94` = `service ID` 示例
+- `a86` = 示例 `project ID`
+- `b94` = 示例 `service ID`
 
-你必须把它改成你自己的值。
+把它们换成你自己的值。
 
-例如：
-
-```text
-https://api.northflank.com/v1/projects/你的ProjectID/services/你的ServiceID/restart
-```
-
-### 第 3 步：在 GitHub 里添加 Secret，然后手动运行一次
+### 第 3 步：添加 GitHub Secret 并手动运行一次
 
 进入：
 
 - `Settings -> Secrets and variables -> Actions`
 
-添加这个 Secret：
+添加 Secret：
 
 - `NF_API_TOKEN`
 
-然后打开：
-
-- `Actions`
-
-手动运行一次 workflow，确认你的 service 能被成功重启。
+然后打开 `Actions`，手动运行一次 `northflank-image-Update`，确认你的 service 被成功重启。
 
 ## 你真正要改的只有 3 处
 
@@ -85,73 +80,59 @@ https://api.northflank.com/v1/projects/你的ProjectID/services/你的ServiceID/
 2. 你的 `service ID`
 3. 你的 `NF_API_TOKEN`
 
-除此之外，其他内容基本都不用动。
+其他内容基本不用动。
 
 ## 完整示例
-
-示例地址：
 
 ```text
 https://api.northflank.com/v1/projects/a86/services/b94/restart
 ```
 
-字段说明：
-
 - `a86` 是示例 `project ID`
 - `b94` 是示例 `service ID`
 
-再次强调：
-
-- `a86 / b94` 只是示例
-- 你部署时一定要换成自己的值
+部署时一定要换成你自己的真实值。
 
 ## 为什么这个方法能更新镜像
 
-这套方案的前提是：
+前提条件：
 
-- 你的 Northflank service 已经配置成 `External image`
+- 你的 Northflank service 已配置为 `External image`
 - 你的镜像 tag 使用的是 `latest`
 
-然后 workflow 会调用 `restart` 接口。
-service 重启时，Northflank 会重新拉取这个外部镜像，因此就能拿到最新版本。
+workflow 会调用 `restart` 接口。service 重启时 Northflank 会重新拉取外部镜像，从而拿到最新版本。
 
 ## 如果你的镜像不是 latest
 
-如果你写的是固定 tag，例如：
+如果你使用固定 tag，例如：
 
 ```text
 my-image:1.2.3
 ```
 
-那么重启以后仍然还是这个固定版本，不会自动变成新版本。
-这套方案更适合 `latest` 这种会滚动更新的标签。
+重启后仍然会是这个固定版本，不会自动变成新版本。此方案更适合 `latest` 这类滚动更新的标签。
 
-## 改定时执行时间
+## 修改定时执行时间
 
-如果你要修改自动执行时间，改这个文件里的 `cron`：
-
-- `.github/workflows/northflank-refresh-external-image.yml`
-
-当前示例是：
+编辑 `.github/workflows/northflank-refresh-external-image.yml` 中的 `cron`：
 
 ```yaml
 schedule:
   - cron: "17 4 * * 2"
 ```
 
-这表示：
+表示：
 
 - 每周二
 - 04:17 UTC
-
-## 目录说明
-
-- [workflow](/E:/_BIGFA%20Free/_code/_Mywork/Northflank%20Refresh%20External%20Image/.github/workflows/northflank-refresh-external-image.yml)
-- [script](/E:/_BIGFA%20Free/_code/_Mywork/Northflank%20Refresh%20External%20Image/scripts/refresh_northflank_external_image.py)
 
 ## 官方文档
 
 - [Run an image from a container registry](https://northflank.com/docs/v1/application/run/run-an-image-from-a-container-registry)
 - [Manage CI/CD](https://northflank.com/docs/v1/application/release/manage-ci-cd)
 - [Restart service API](https://northflank.com/docs/v1/api/project/services/restart-service)
+
+## 许可证
+
+本项目使用 MIT License。
 
