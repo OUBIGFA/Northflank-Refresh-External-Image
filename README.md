@@ -1,11 +1,13 @@
-<div># Northflank 外部镜像自动刷新
-
-定时调用 Northflank API 重启外部镜像 service，自动拉取 Docker Hub 最新版本
-
-简体中文 | [English](README.en.md)
-
-     ![Shell](https://img.shields.io/badge/language-Shell-4EAA25)     ![Platform](https://img.shields.io/badge/platform-GitHub%20Actions-2088FF)     ![License](https://img.shields.io/badge/license-MIT-111827)     ![Schedule](https://img.shields.io/badge/schedule-Weekly-22c55e)   
-
+<div align="center">
+  <h1>Northflank 外部镜像自动刷新</h1>
+  <p>定时调用 Northflank API 重启外部镜像 service，自动拉取 Docker Hub 最新版本</p>
+  <p>简体中文 | <a href="README.en.md">English</a></p>
+  <p>
+    <img alt="Shell" src="https://img.shields.io/badge/language-Shell-4EAA25">
+    <img alt="Platform" src="https://img.shields.io/badge/platform-GitHub%20Actions-2088FF">
+    <img alt="License" src="https://img.shields.io/badge/license-MIT-111827">
+    <img alt="Schedule" src="https://img.shields.io/badge/schedule-Weekly-22c55e">
+  </p>
 </div>
 
 > 只需 3 分钟部署，之后定时自动重启你的 Northflank service，使其重新拉取外部镜像的最新版本。

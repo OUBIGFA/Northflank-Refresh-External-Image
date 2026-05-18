@@ -1,11 +1,13 @@
-<div># Northflank External Image Auto Refresh
-
-Periodically restarts Northflank services using external images, pulling the latest version from Docker Hub
-
-[简体中文](README.md) | English
-
-     ![Shell](https://img.shields.io/badge/language-Shell-4EAA25)     ![Platform](https://img.shields.io/badge/platform-GitHub%20Actions-2088FF)     ![License](https://img.shields.io/badge/license-MIT-111827)     ![Schedule](https://img.shields.io/badge/schedule-Weekly-22c55e)   
-
+<div align="center">
+  <h1>Northflank External Image Auto Refresh</h1>
+  <p>Periodically restarts Northflank services using external images, pulling the latest version from Docker Hub</p>
+  <p><a href="README.md">简体中文</a> | English</p>
+  <p>
+    <img alt="Shell" src="https://img.shields.io/badge/language-Shell-4EAA25">
+    <img alt="Platform" src="https://img.shields.io/badge/platform-GitHub%20Actions-2088FF">
+    <img alt="License" src="https://img.shields.io/badge/license-MIT-111827">
+    <img alt="Schedule" src="https://img.shields.io/badge/schedule-Weekly-22c55e">
+  </p>
 </div>
 
 > Set up in 3 minutes. After that, your Northflank service is restarted on schedule and always pulls the freshest external image.
