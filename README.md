@@ -18,7 +18,7 @@
 
 打开：
 
-- https://app.northflank.com
+* <https://app.northflank.com>
 
 创建一个 API Token，设置好权限。后面把它填到 GitHub 的 `NF_API_TOKEN` 里。
 
@@ -32,15 +32,15 @@
 
 ### 第 1 步：用 GitHub Importer 转为私有仓库
 
-1. 登录 GitHub，打开 https://github.com/new/import
+1. 登录 GitHub，打开 <https://github.com/new/import>
 2. 按以下信息填写：
 
-| 字段 | 填什么 |
-| --- | --- |
+| 字段                                | 填什么                                                            |
+| --------------------------------- | -------------------------------------------------------------- |
 | `Your old repository's clone URL` | `https://github.com/OUBIGFA/Northflank-Refresh-External-Image` |
-| `Owner` | 你的 GitHub 账号 |
-| `Repository name` | 你的仓库名，例如 `my-northflank-refresh` |
-| `Privacy` | 选 `Private` |
+| `Owner`                           | 你的 GitHub 账号                                                   |
+| `Repository name`                 | 你的仓库名，例如 `my-northflank-refresh`                               |
+| `Privacy`                         | 选 `Private`                                                    |
 
 1. 点击 `Begin import`，等待导入完成（通常几十秒到几分钟）
 2. 导入完成后你就拥有一个属于自己的私有仓库，后续的 Secret 和 workflow 都在这个仓库里设置
@@ -49,7 +49,7 @@
 
 打开：
 
-- `.github/workflows/northflank-refresh-external-image.yml`
+* `.github/workflows/northflank-refresh-external-image.yml`
 
 你会看到这个示例地址：
 
@@ -59,8 +59,9 @@ https://api.northflank.com/v1/projects/a86/services/b94/restart
 
 含义：
 
-- `a86` = 示例 `project ID`
-- `b94` = 示例 `service ID`
+* `a86` = 示例 `project ID`
+
+* `b94` = 示例 `service ID`
 
 把它们换成你自己的值。
 
@@ -68,11 +69,11 @@ https://api.northflank.com/v1/projects/a86/services/b94/restart
 
 进入：
 
-- `Settings -> Secrets and variables -> Actions`
+* `Settings -> Secrets and variables -> Actions`
 
 添加 Secret：
 
-- `NF_API_TOKEN`
+* `NF_API_TOKEN`
 
 然后打开 `Actions`，手动运行一次 `northflank-image-Update`，确认你的 service 被成功重启。
 
@@ -90,8 +91,9 @@ https://api.northflank.com/v1/projects/a86/services/b94/restart
 https://api.northflank.com/v1/projects/a86/services/b94/restart
 ```
 
-- `a86` 是示例 `project ID`
-- `b94` 是示例 `service ID`
+* `a86` 是示例 `project ID`
+
+* `b94` 是示例 `service ID`
 
 部署时一定要换成你自己的真实值。
 
@@ -99,8 +101,9 @@ https://api.northflank.com/v1/projects/a86/services/b94/restart
 
 前提条件：
 
-- 你的 Northflank service 已配置为 `External image`
-- 你的镜像 tag 使用的是 `latest`
+* 你的 Northflank service 已配置为 `External image`
+
+* 你的镜像 tag 使用的是 `latest`
 
 workflow 会调用 `restart` 接口。service 重启时 Northflank 会重新拉取外部镜像，从而拿到最新版本。
 
@@ -125,16 +128,22 @@ schedule:
 
 表示：
 
-- 每周二
-- 04:17 UTC
+* 每周二
+
+* 04:17 UTC
 
 ## 官方文档
 
-- [Run an image from a container registry](https://northflank.com/docs/v1/application/run/run-an-image-from-a-container-registry)
-- [Manage CI/CD](https://northflank.com/docs/v1/application/release/manage-ci-cd)
-- [Restart service API](https://northflank.com/docs/v1/api/project/services/restart-service)
+* [Run an image from a container registry](https://northflank.com/docs/v1/application/run/run-an-image-from-a-container-registry)
+
+* [Manage CI/CD](https://northflank.com/docs/v1/application/release/manage-ci-cd)
+
+* [Restart service API](https://northflank.com/docs/v1/api/project/services/restart-service)
 
 ## 许可证
 
 本项目使用 MIT License。
 
+***
+
+[linux.do](https://linux.do)
